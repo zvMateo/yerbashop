@@ -8,7 +8,10 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import data from "./data.json";
 
 const ChartAreaInteractive = dynamic(
-  () => import("@/components/chart-area-interactive"),
+  () =>
+    import("@/components/chart-area-interactive").then(
+      (mod) => mod.ChartAreaInteractive,
+    ),
   {
     ssr: false,
     loading: () => <p className="text-center">Cargando gráfico...</p>,
