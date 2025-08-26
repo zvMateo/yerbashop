@@ -3,7 +3,15 @@ import postgres from "postgres";
 import * as schema from "./schema";
 
 const connectionString = process.env.DATABASE_URL;
+let db: PostgresJsDatabase<typeof schema> | null = null;
 
-export const db: PostgresJsDatabase<typeof schema> = connectionString
-  ? drizzle(postgres(connectionString), { schema })
-  : ({} as PostgresJsDatabase<typeof schema>);
+if (connectionString) {
+  try {
+    db = drizzle(postgres(connectionString), { schema });
+  } catch (error) {
+    console.error("Error al inicializar la base de datos:", error);
+  }
+}
+
+export { db };
+
