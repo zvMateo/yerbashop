@@ -34,6 +34,8 @@ export function AppSidebar({
   subtitle,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {sidetitle?: React.ReactNode, subtitle?: React.ReactNode}) {
+  const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -56,19 +58,21 @@ export function AppSidebar({
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-              {/* <NavUser user={data.user} /> */}
-              <div className="">
-              <UserButton 
-                appearance={{
-                  elements: {
-                    avatarBox: "w-10 h-10 rounded-lg ",
-                    rootBox: "mx-auto",
-                    card: "shadow-lg",
-                    button: "w-full justify-start",
-                  },
-                }}
-              />
-            </div>  
+        {/* <NavUser user={data.user} /> */}
+        {clerkKey && (
+          <div className="">
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "w-10 h-10 rounded-lg ",
+                  rootBox: "mx-auto",
+                  card: "shadow-lg",
+                  button: "w-full justify-start",
+                },
+              }}
+            />
+          </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   );
