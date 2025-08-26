@@ -19,11 +19,19 @@ export const usersTable = pgTable("users", {
 // --- Purchases and packaging -------------------------------------------------
 
 // Base table that tracks lot weights by variety.
+export const varieties = pgTable("varieties", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 255 }).notNull(),
+  description: varchar({ length: 255 }),
+});
+
 export const purchaseLots = pgTable("purchase_lots", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  varietyId: integer("variety_id").notNull(),
-  pesoRestanteKg: numeric("peso_restante_kg", { precision: 10, scale: 2 })
-    .notNull(),
+  varietyId: integer("variety_id").notNull().references(() => varieties.id),
+  date: date().notNull(),
+  initialWeightKg: numeric({ precision: 10, scale: 2 }).notNull(),
+  remainingWeightKg: numeric({ precision: 10, scale: 2 }).notNull(),
+  cost: numeric({ precision: 10, scale: 2 }).notNull(),
 });
 
 // Packaging size options.
@@ -48,7 +56,7 @@ export const packagingSessionsWeightTrigger = sql`
   RETURNS TRIGGER AS $$
   BEGIN
     UPDATE purchase_lots
-    SET "peso_restante_kg" = "peso_restante_kg" - NEW."peso_descontado_kg"
+    SET "remaining_weight_kg" = "remaining_weight_kg" - NEW."peso_descontado_kg"
     WHERE id = NEW."lot_id";
     RETURN NEW;
   END;
