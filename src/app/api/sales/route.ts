@@ -33,15 +33,13 @@ export async function POST(req: Request) {
     .values({ fecha, total: total.toString() })
     .returning();
   for (const item of items) {
-    await db
-      .insert(saleItemsTable)
-      .values({
-        saleId: sale.id,
-        varietyId: item.varietyId,
-        size: item.size,
-        units: item.units,
-        precioUnitario: item.precioUnitario.toString(),
-      });
+    await db.insert(saleItemsTable).values({
+      saleId: sale.id,
+      varietyId: item.varietyId,
+      size: item.size,
+      units: item.units,
+      precioUnitario: item.precioUnitario.toString(),
+    });
     const [stock] = await db
       .select()
       .from(packagedStockTable)

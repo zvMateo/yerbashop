@@ -1,46 +1,44 @@
+"use client";
 
-
-import * as React from "react";
-
-
-import {navMain} from "@/config/side-menus";
+import React from "react";
+import { navMain } from "@/config/side-menus";
 import MainSideMenus from "@/components/layouts/main-side";
-// import {data} from "@/config/user-data";
-import { UserButton } from '@clerk/nextjs';
-import { SidebarGroupLabel } from "@/components/ui/sidebar";
-
-
-// import { NavDocuments } from "@/components/nav-documents";
-// import { NavMain } from "@/components/nav-main";
-// import { NavSecondary } from "@/components/nav-secondary";
-// import { NavUser } from "@/components/nav-user";
+import { UserButton } from "@clerk/nextjs";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  // SidebarMenuButton,
-  // SidebarMenuItem,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
 } from "@/components/ui/sidebar";
+import { useIsMobile } from "@/hooks/use-mobile";
 
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  /** Título mostrado en la cabecera del sidebar */
+  sidetitle?: React.ReactNode;
+  /** Texto descriptivo para el menú secundario */
+  subtitle?: React.ReactNode;
+}
 
-
+/**
+ * Barra lateral principal de la aplicación. Centraliza la autenticación y los menús
+ * y se adapta a dispositivos móviles usando `useIsMobile`.
+ */
 export function AppSidebar({
   children,
   sidetitle,
   subtitle,
   ...props
-}: React.ComponentProps<typeof Sidebar> & {sidetitle?: React.ReactNode, subtitle?: React.ReactNode}) {
+}: AppSidebarProps) {
+  const isMobile = useIsMobile();
   const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader>
-        {sidetitle} 
-      </SidebarHeader>
+    <Sidebar collapsible={isMobile ? "offcanvas" : "offcanvas"} {...props}>
+      <SidebarHeader>{sidetitle}</SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent className="flex flex-col gap-2">
@@ -49,42 +47,30 @@ export function AppSidebar({
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        
+
         <SidebarGroup>
           <SidebarGroupContent className="flex flex-col gap-2">
-            <SidebarGroupLabel>{subtitle}</SidebarGroupLabel>
+            {subtitle && <SidebarGroupLabel>{subtitle}</SidebarGroupLabel>}
             <SidebarMenu>{children}</SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        {/* <NavUser user={data.user} /> */}
         {clerkKey && (
-          <div className="">
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox: "w-10 h-10 rounded-lg ",
-                  rootBox: "mx-auto",
-                  card: "shadow-lg",
-                  button: "w-full justify-start",
-                },
-              }}
-            />
-          </div>
+          <UserButton
+            appearance={{
+              elements: {
+                avatarBox: "w-10 h-10 rounded-lg",
+                rootBox: "mx-auto",
+                card: "shadow-lg",
+                button: "w-full justify-start",
+              },
+            }}
+          />
         )}
       </SidebarFooter>
     </Sidebar>
   );
 }
 
- {/* Header del dashboard con info del usuario */}
-            {/* <div className="fixed top-0 right-0 z-50 p-4">
-              <UserButton 
-                appearance={{
-                  elements: {
-                    avatarBox: "w-10 h-10"
-                  }
-                }}
-              />
-            </div> */}
+export default AppSidebar;

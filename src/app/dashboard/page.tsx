@@ -1,9 +1,11 @@
-import React from 'react';
-import { currentUser } from '@clerk/nextjs/server';
+import React from "react";
+import { currentUser } from "@clerk/nextjs/server";
+import { getDashboardStats } from "@/lib/dashboard";
 
 export default async function DashboardPage() {
   const user = await currentUser();
-  
+  const stats = await getDashboardStats();
+
   return (
     <div className="p-6">
       <div className="mb-6">
@@ -14,25 +16,23 @@ export default async function DashboardPage() {
           </p>
         )}
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <h3 className="text-lg font-semibold mb-2">Resumen</h3>
-          <p className="text-gray-600">Información general de tu tienda</p>
+          <p className="text-gray-600">{stats.summary} usuarios registrados</p>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <h3 className="text-lg font-semibold mb-2">Ventas</h3>
-          <p className="text-gray-600">Estadísticas de ventas recientes</p>
+          <p className="text-gray-600">{stats.sales} ventas totales</p>
         </div>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <h3 className="text-lg font-semibold mb-2">Productos</h3>
-          <p className="text-gray-600">Gestión de productos</p>
+          <p className="text-gray-600">{stats.products} productos activos</p>
         </div>
       </div>
     </div>
   );
-};
-
-
+}
