@@ -22,6 +22,9 @@ const saleSchema = z.object({
 });
 
 export async function GET() {
+  if (!db) {
+    return NextResponse.json([]);
+  }
   try {
     const sales = await db.select().from(salesTable);
     return NextResponse.json(sales);
@@ -36,6 +39,12 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const { items, fecha } = saleSchema.parse(await req.json());
+    if (!db) {
+      return NextResponse.json(
+        { error: "Base de datos no disponible" },
+        { status: 503 },
+      );
+    }
     const parsedFecha = fecha ? new Date(fecha) : undefined;
     const total = items.reduce(
       (sum, i) => sum + Number(i.precioUnitario) * Number(i.units),

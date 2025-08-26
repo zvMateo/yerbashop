@@ -21,6 +21,9 @@ const deleteSchema = z.object({
 });
 
 export async function GET() {
+  if (!db) {
+    return NextResponse.json([]);
+  }
   try {
     const stock = await db.select().from(packagedStockTable);
     return NextResponse.json(stock);
@@ -35,6 +38,12 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = postSchema.parse(await req.json());
+    if (!db) {
+      return NextResponse.json(
+        { error: "Base de datos no disponible" },
+        { status: 503 },
+      );
+    }
     const [record] = await db
       .insert(packagedStockTable)
       .values(body)
@@ -57,6 +66,12 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   try {
     const { id, units } = putSchema.parse(await req.json());
+    if (!db) {
+      return NextResponse.json(
+        { error: "Base de datos no disponible" },
+        { status: 503 },
+      );
+    }
     await db
       .update(packagedStockTable)
       .set({ units })
@@ -79,6 +94,12 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const { id } = deleteSchema.parse(await req.json());
+    if (!db) {
+      return NextResponse.json(
+        { error: "Base de datos no disponible" },
+        { status: 503 },
+      );
+    }
     await db
       .delete(packagedStockTable)
       .where(eq(packagedStockTable.id, id));
