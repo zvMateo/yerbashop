@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function TitleAnalisis() {
-    return (
-        <h2>Analisis</h2>
-    )
+  return <h2>Analisis</h2>;
 }
 
 export default TitleAnalisis;

@@ -1,9 +1,9 @@
 import { Url } from "next/dist/shared/lib/router/router";
 
 export interface User {
-    name: string;
-    email: string;
-    avatar: Url | string;
+  name: string;
+  email: string;
+  avatar: Url | string;
 }
 
 export const data = {

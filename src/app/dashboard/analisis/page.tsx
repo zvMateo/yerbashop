@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function AnalyticsPage() {
-    return (
-        <div>
-            Análisis
-        </div>
-    );
+  return <div>Análisis</div>;
 }
 
 export default AnalyticsPage;

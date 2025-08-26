@@ -16,7 +16,10 @@ export const usersTable = pgTable("users", {
 
 export const lotsTable = pgTable("lots", {
   id: serial("id").primaryKey(),
-  remainingWeight: numeric("remaining_weight", { precision: 10, scale: 2 }).notNull(),
+  remainingWeight: numeric("remaining_weight", {
+    precision: 10,
+    scale: 2,
+  }).notNull(),
 });
 
 export const packagedStockTable = pgTable("packaged_stock", {
@@ -38,5 +41,8 @@ export const saleItemsTable = pgTable("sale_items", {
   varietyId: integer("variety_id").notNull(),
   size: integer("size").notNull(),
   units: integer("units").notNull(),
-  precioUnitario: numeric("precio_unitario", { precision: 10, scale: 2 }).notNull(),
+  precioUnitario: numeric("precio_unitario", {
+    precision: 10,
+    scale: 2,
+  }).notNull(),
 });

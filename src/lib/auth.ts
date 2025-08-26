@@ -1,17 +1,17 @@
-import { auth } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 export async function requireAuth() {
-  const { userId } = await auth()
-  
+  const { userId } = await auth();
+
   if (!userId) {
-    redirect('/sign-in')
+    redirect("/sign-in");
   }
-  
-  return userId
+
+  return userId;
 }
 
 export async function getUserInfo() {
-  const { userId } = await auth()
-  return { userId }
+  const { userId } = await auth();
+  return { userId };
 }

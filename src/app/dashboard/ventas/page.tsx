@@ -10,9 +10,8 @@ export default function VentasPage() {
     precioUnitario: "",
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
