@@ -12,6 +12,7 @@ import {
   IconReport,
   IconSearch,
   IconUsers,
+  IconShoppingCart,
 } from "@tabler/icons-react"
 
 
@@ -31,16 +32,28 @@ export const navMain: NavItem[] = [
       icon: IconDashboard,
     },
     {
+      title: "Registrar Venta",
+      url: "/dashboard/ventas",
+      icon: IconShoppingCart,
+      subtitle: "Ventas manuales",
+    },
+    {
       title: "Productos",
       url: "/dashboard/productos",
       icon: IconListDetails,
       subtitle: "Gestiona tus productos",
     },
     {
-      title: "Análisis",
-      url: "/dashboard/analisis",
-      icon: IconChartBar,
-      subtitle: "Estadísticas y reportes",
+      title: "Inventario",
+      url: "/dashboard/inventario",
+      icon: IconDatabase,
+      subtitle: "Control de stock",
+    },
+    {
+      title: "Pedidos",
+      url: "/dashboard/pedidos",
+      icon: IconReport,
+      subtitle: "Gestión de pedidos",
     },
     {
       title: "Clientes",
@@ -49,10 +62,10 @@ export const navMain: NavItem[] = [
       subtitle: "Gestión de clientes",
     },
     {
-      title: "Pedidos",
-      url: "/dashboard/pedidos",
-      icon: IconReport,
-      subtitle: "Gestión de pedidos",
+      title: "Análisis",
+      url: "/dashboard/analisis",
+      icon: IconChartBar,
+      subtitle: "Estadísticas y reportes",
     },
     {
       title: "Promociones",
